@@ -89,7 +89,7 @@ spec:
       {{- end }}
       {{- if .Values.hostAliases }}
       hostAliases:
-      {{- range .Values.hostAliases }}
+      {{- range .Values.workers.hostAliases }}
         - ip: {{ .ip | quote }}
           hostnames:
         {{- range .hostnames }}
