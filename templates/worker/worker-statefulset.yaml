@@ -87,9 +87,15 @@ spec:
       securityContext:
         {{- $podSecurityContext | nindent 8 }}
       {{- end }}
-      {{- with .Values.workers.hostAliases }}  
+      {{- if .Values.hostAliases }}
       hostAliases:
-    {{ toYaml . | indent 8 }}
+      {{- range .Values.hostAliases }}
+        - ip: {{ .ip | quote }}
+          hostnames:
+        {{- range .hostnames }}
+          - {{ . | quote }}
+        {{- end }}
+      {{- end }}
       {{- end }}
       initContainers:
         {{- if $extraPipPackages }}
