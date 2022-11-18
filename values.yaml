@@ -849,6 +849,10 @@ workers:
   ##   https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#podsecuritycontext-v1-core
   ##
   securityContext: {}
+  hostAliases:
+  - ip: "10.0.0.1"
+    hostnames:
+    - "host.domain.com"
 
   ## labels for the worker StatefulSet
   ##

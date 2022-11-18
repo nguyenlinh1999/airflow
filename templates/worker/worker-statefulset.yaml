@@ -87,6 +87,10 @@ spec:
       securityContext:
         {{- $podSecurityContext | nindent 8 }}
       {{- end }}
+      {{- with .Values.hostAliases }}  
+      hostAliases:
+    {{ toYaml . | indent 8 }}
+      {{- end }}
       initContainers:
         {{- if $extraPipPackages }}
         {{- include "airflow.init_container.install_pip_packages" (dict "Release" .Release "Values" .Values "extraPipPackages" $extraPipPackages) | indent 8 }}
