@@ -5,6 +5,7 @@
 {{- $podSecurityContext := include "airflow.podSecurityContext" (dict "Release" .Release "Values" .Values "securityContext" .Values.workers.securityContext) }}
 {{- $extraPipPackages := concat .Values.airflow.extraPipPackages .Values.workers.extraPipPackages }}
 {{- $extraVolumeMounts := .Values.workers.extraVolumeMounts }}
+{{- $hostAliases := .Values.workers.hostAliases }}
 {{- $volumeMounts := include "airflow.volumeMounts" (dict "Release" .Release "Values" .Values "extraPipPackages" $extraPipPackages "extraVolumeMounts" $extraVolumeMounts) }}
 {{- $extraVolumes := .Values.workers.extraVolumes }}
 {{- $volumes := include "airflow.volumes" (dict "Release" .Release "Values" .Values "extraPipPackages" $extraPipPackages "extraVolumes" $extraVolumes "extraVolumeMounts" $extraVolumeMounts) }}
@@ -87,7 +88,7 @@ spec:
       securityContext:
         {{- $podSecurityContext | nindent 8 }}
       {{- end }}
-      {{- if .Values.workers.hostAliases }}
+      {{- if $hostAliases }}
       hostAliases:
       {{- range .Values.workers.hostAliases }}
         - ip: {{ .ip | quote }}
